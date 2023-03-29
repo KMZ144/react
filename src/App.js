@@ -1,17 +1,20 @@
 import './App.css';
-import Footer from './components/footer';
 import MyNav from './components/nav';
 import Products from './components/products';
 import Slider from './components/slider';
+import Task1 from './components/task1';
+
 
 function App() {
+
+  
   return (
-   <div>
+  <div>
     <MyNav/>
     <Slider/>
     <Products/>
-    <Footer/>
-   </div>
+    <Task1/>
+  </div>
     
   );
 }
