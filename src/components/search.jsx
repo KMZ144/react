@@ -29,6 +29,7 @@ export default function Search() {
     const search=(e)=>{
        let query=e.target.value
        setArticles(articles.filter((ele)=>ele.desc.match(query)))
+       setFlag(true)
        if (query===''){
         setArticles(data)
        }
@@ -40,7 +41,7 @@ export default function Search() {
     <div className='container w-50'>
         <div className="mb-3">
   <label  className="form-label">Search</label>
-  <input  className="form-control" placeholder="Search" onInput={search}/>
+  <input  className="form-control" placeholder="Search" onChange={search}/>
 </div>
 {
  flag ? <Articles articles={articles} />: <div>no matching </div>
