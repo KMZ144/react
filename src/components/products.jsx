@@ -1,58 +1,42 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
+import productApi from "../Api/products";
 import Product from "./product";
-export default class products extends Component {
-  products = [
-    {
-      id: 1,
-      title: "product title 1",
-      price: 500,
-      img: "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-    {
-      id: 2,
-      title: "product title 2",
-      price: 500,
-      img: "https://images.pexels.com/photos/2227832/pexels-photo-2227832.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-    {
-      id: 3,
-      title: "product title 3",
-      price: 500,
-      img: "https://images.pexels.com/photos/1008692/pexels-photo-1008692.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-    {
-      id: 4,
-      title: "product title 4",
-      price: 500,
-      img: "https://images.pexels.com/photos/1517145/pexels-photo-1517145.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-    {
-      id: 5,
-      title: "product title 5",
-      price: 500,
-      img: "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-    {
-      id: 6,
-      title: "product title 6",
-      price: 500,
-      img: "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    },
-  ];
-  render() {
-    return (
-      <div className="mt-5">
-        <div className="bg-light p-5 text-center">
-          <h2>Our Products</h2>
+import { useNavigate } from 'react-router-dom'
+
+export default function Products() {
+  let [products, setProducts] = useState([]);
+  const getAllProducts = async () => {
+    try {
+      let response = await productApi.getAllProducts();
+      setProducts(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const navigate=useNavigate();
+
+  const navigateToAdd=()=>{
+  navigate('/products/0/edit')    
+  }
+
+  useEffect(() => {
+    getAllProducts();
+  }, []);
+  return (
+    <div className="mt-5">
+      <div className="bg-light p-5 text-center">
+        <h2>Our Products</h2>
+      </div>
+      <div className="container">
+        <div className="text-center">
+        <button className="btn btn-primary" onClick={navigateToAdd}>Add </button>
         </div>
-        <div className="container">
-          <div className="row justify-content-center">
-            {this.products.map((value) => {
-              return <Product key={value.id} product={value} />;
-            })}
-          </div>
+        <div className="row justify-content-center">
+          {products.map((value) => {
+            return <Product key={value.id} product={value} />;
+          })}
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
